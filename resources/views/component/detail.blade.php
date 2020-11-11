@@ -7,7 +7,8 @@
             <div class="row">
                 <div class="col-lg-8 col-md-10 mx-auto">
                     <div class="post-heading">
-                        <h1>{{ $content->title  }}</h1>
+                        <h1 >{{ $content->title  }}</h1>
+
                         <span class="meta">Posted by {{ $content->author  }}
               on {{ $content->created_at }}</span>
                     </div>
@@ -21,7 +22,7 @@
     <article>
         <div class="container">
             <div class="row">
-                <div class="col-lg-8 col-md-10 mx-auto">
+                <div class="col-lg-8 col-md-10 mx-auto" style="word-break: break-all">
                     {!! $content->content !!}
                 </div>
             </div>

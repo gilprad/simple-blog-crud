@@ -20,7 +20,7 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="col-lg-8 col-md-10 mx-auto">
+            <div class="col-lg-8 col-md-10 mx-auto" style="word-break: break-all">
                 @foreach($contents as $content)
                     <div class="post-preview">
                         <a href="{{ route('blog.show', $content->id)  }}">
