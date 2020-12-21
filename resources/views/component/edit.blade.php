@@ -17,7 +17,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-md-10 mx-auto">
-                <form name="sentMessage" id="contactForm" action="{{route('blog.update', $content->id)}}" method="POST">
+                <form name="sentMessage" id="contactForm" action="{{route('blog.update', $index)}}" method="POST">
                     @method('PUT')
                     @csrf
                     <div class="control-group">

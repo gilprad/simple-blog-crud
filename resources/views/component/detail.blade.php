@@ -27,13 +27,13 @@
                 </div>
             </div>
             <div class="clearfix">
-                <a class="btn btn-primary float-right" href="{{ route('blog.edit', $content->id) }}">Edit</a>
-                <input type="submit" class="btn btn-danger float-right" form="deleteartikel" role="button" href="{{ route('blog.destroy', $content->id) }}" value="DELETE">
+                <a class="btn btn-primary float-right" href="{{ route('blog.edit', $index) }}">Edit</a>
+                <input type="submit" class="btn btn-danger float-right" form="deleteartikel" role="button" href="{{ route('blog.destroy', $index) }}" value="DELETE">
             </div>
         </div>
     </article>
 
-    <form action="{{ route('blog.destroy', $content->id) }}" id="deleteartikel" method="POST">
+    <form action="{{ route('blog.destroy', $index) }}" id="deleteartikel" method="POST">
         @method('DELETE')
         @csrf
     </form>

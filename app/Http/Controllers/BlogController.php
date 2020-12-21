@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use const Grpc\STATUS_OUT_OF_RANGE;
 
 class BlogController extends Controller
 {
@@ -44,7 +43,6 @@ class BlogController extends Controller
             'title' => $request->input('title'),
             'content' => $request->input('content'),
             'created_at' => date('d-m-Y'),
-            'id' => ($data[count($data) - 1]['id'] ?? 0) + 1
         ));
         Storage::put('artikel.json', json_encode($data));
 
@@ -60,8 +58,8 @@ class BlogController extends Controller
     {
         $data = json_decode(Storage::get('artikel.json'), true);
         $artikel = null;
-        foreach ($data as $datum) {
-            if ($datum['id'] == $id) {
+        foreach ($data as $index => $datum) {
+            if ($index == $id) {
                 $artikel = $datum;
                 break;
             }
@@ -72,7 +70,8 @@ class BlogController extends Controller
         }
 
         return view('component.detail', [
-            'content' => (object) $artikel
+            'content' => (object) $artikel,
+            'index' => $index
         ]);
     }
 
@@ -86,8 +85,8 @@ class BlogController extends Controller
     {
         $data = json_decode(Storage::get('artikel.json'), true);
         $artikel = null;
-        foreach ($data as $datum) {
-            if ($datum['id'] == $id) {
+        foreach ($data as $index => $datum) {
+            if ($index == $id) {
                 $artikel = $datum;
                 break;
             }
@@ -98,7 +97,8 @@ class BlogController extends Controller
         }
 
         return view('component.edit', [
-            'content' => (object) $artikel
+            'content' => (object) $artikel,
+            'index' => $index
         ]);
     }
 
@@ -113,14 +113,12 @@ class BlogController extends Controller
     {
         $data = json_decode(Storage::get('artikel.json'), true);
         $artikel = null;
-        $i = 0;
-        foreach ($data as $datum) {
-            if ($datum['id'] == $id) {
+        foreach ($data as $index => $datum) {
+            if ($index == $id) {
                 $artikel = $datum;
-                $data[$i] = array_replace($data[$i], $request->except(['_token', '_method']));
+                $data[$index] = array_replace($datum, $request->except(['_token', '_method']));
                 break;
             }
-            $i++;
         }
 
         if ($artikel === null) {
@@ -142,14 +140,11 @@ class BlogController extends Controller
     {
         $data = json_decode(Storage::get('artikel.json'), true);
         $artikel = null;
-        $i = 0;
-        foreach ($data as $datum) {
-            if ($datum['id'] == $id) {
-                $artikel = $datum;
-                unset($data[$i]);
+        foreach ($data as $index => $datum) {
+            if ($index == $id) {
+                unset($data[$index]);
                 break;
             }
-            $i++;
         }
         Storage::put('artikel.json', json_encode($data));
         return redirect('/');
